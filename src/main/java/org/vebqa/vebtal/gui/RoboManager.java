@@ -13,7 +13,6 @@ import org.vebqa.vebtal.KeywordFinder;
 import org.vebqa.vebtal.TestAdaptionPlugin;
 import org.vebqa.vebtal.TestAdaptionType;
 import org.vebqa.vebtal.rest.RestServer;
-import org.vebqa.vebtal.splash.AppPreloader;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -72,6 +71,7 @@ public class RoboManager extends Application {
 		// load plugin configurations
 		Iterator<TestAdaptionPlugin> plugins = ServiceLoader.load(TestAdaptionPlugin.class).iterator();
 		if (!plugins.hasNext()) {
+			logger.info("No plugins found!");
 			GuiManager.getinstance().writeLog("No plugins found!");
 		}
 
@@ -80,8 +80,9 @@ public class RoboManager extends Application {
 		
 		while (plugins.hasNext()) {
 			TestAdaptionPlugin robo = plugins.next();
-			LauncherImpl.notifyPreloader(this,
-					new AppPreloader.ActualTaskNotification("Load configuration for plugin: " + robo.getName()));
+			logger.info("Found next plugin: {}", robo.getAdaptionID());
+//			LauncherImpl.notifyPreloader(this,
+//					new AppPreloader.ActualTaskNotification("Load configuration for plugin: " + robo.getName()));
 			// we will load configs from Adapter and extensions
 			if (robo.getType() == TestAdaptionType.ADAPTER || robo.getType() == TestAdaptionType.EXTENSION) {
 				CombinedConfiguration tCfgAdapter = new CombinedConfiguration();
@@ -119,8 +120,10 @@ public class RoboManager extends Application {
 
 		while (plugins.hasNext()) {
 			TestAdaptionPlugin robo = plugins.next();
-			LauncherImpl.notifyPreloader(this, new AppPreloader.ActualTaskNotification(
-					"Start plugin of type (" + robo.getType() + "): " + robo.getName()));
+			
+//			  LauncherImpl.notifyPreloader(this, new AppPreloader.ActualTaskNotification(
+//			  "Start plugin of type (" + robo.getType() + "): " + robo.getName()));
+			 
 			// we will start adapter only at this point
 			if (robo.getType() == TestAdaptionType.ADAPTER) {
 				try {
@@ -171,8 +174,8 @@ public class RoboManager extends Application {
 		t.start();
 
 		while (!t.isAlive()) {
-			LauncherImpl.notifyPreloader(this,
-					new AppPreloader.ActualTaskNotification("Wait for service startup completion."));
+//			LauncherImpl.notifyPreloader(this,
+//					new AppPreloader.ActualTaskNotification("Wait for service startup completion."));
 			Thread.sleep(50);
 		}
 

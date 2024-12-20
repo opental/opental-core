@@ -207,7 +207,7 @@ public abstract class AbstractTestAdaptionPlugin implements TestAdaptionPlugin {
 		} catch (ConfigurationException e) {
 			logger.error("Couldnt load configuration file: {} because of {}", tPropertiesCore.getAbsolutePath(), e.getMessage());
 		}
-
+logger.info("Size: {}", configCore.size());
 		// load user configuration from /conf folder
 		String tPropertiesUserName = aTabIdentifier + "_user.properties";
 		File tPropertiesUser = new File("./conf/" + tPropertiesUserName);

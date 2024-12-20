@@ -167,7 +167,7 @@ public class RestServer {
 			}
 		} // register adaption plugins
 
-		config.register(org.glassfish.jersey.moxy.json.MoxyJsonFeature.class);
+		// config.register(MoxyJsonFeature.class);
 		config.register(RequestLoggingFilter.class);
 		config.register(CharsetResponseFilter.class);
 
