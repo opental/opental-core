@@ -15,8 +15,6 @@ import org.vebqa.vebtal.TestAdaptionType;
 import org.vebqa.vebtal.rest.RestServer;
 import org.vebqa.vebtal.splash.AppPreloader;
 
-import com.sun.javafx.application.LauncherImpl;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -34,7 +32,8 @@ public class RoboManager extends Application {
 	}
 
 	public static void main(String[] args) {
-		LauncherImpl.launchApplication(RoboManager.class, AppPreloader.class, args);
+		Application.launch(RoboManager.class, args);
+		// LauncherImpl.launchApplication(RoboManager.class, AppPreloader.class, args);
 	}
 
 	@Override
