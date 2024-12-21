@@ -2,12 +2,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.github.vebqa</groupId>
-		<artifactId>vebtal-parent</artifactId>
-		<version>1.0.6-SNAPSHOT</version>
-	</parent>
 
+	<groupId>com.github.vebqa</groupId>
 	<artifactId>opental-core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
@@ -26,7 +22,14 @@
 	</licenses>
 
 	<properties>
-		<modulename>opentalapi</modulename>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<version.jersey>3.1.9</version.jersey>
+		<version.jetty>11.0.24</version.jetty>
+		<version.slf4j>2.0.16</version.slf4j>
+		<version.log4j>2.13.3</version.log4j>
+		<version.junit>4.13.2</version.junit>
+		<version.hamcrest>2.2</version.hamcrest>
+		<version.assertj>3.27.0</version.assertj>		
 	</properties>
 
 	<scm>
@@ -41,11 +44,47 @@
 	</developers>
 
 	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
-			<plugin>
-				<groupId>eu.somatik.serviceloader-maven-plugin</groupId>
-				<artifactId>serviceloader-maven-plugin</artifactId>
-			</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.3.1</version>
+					<configuration>
+						<resources>
+							<resource>
+								<directory>src/main/resources</directory>
+							</resource>
+						</resources>
+					</configuration>
+				</plugin>		
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.13.0</version>
+					<configuration>
+						<source>21</source>
+						<target>21</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>eu.somatik.serviceloader-maven-plugin</groupId>
+					<artifactId>serviceloader-maven-plugin</artifactId>
+					<version>1.4.0</version>
+					<configuration>
+						<services>
+							<param>org.vebqa.vebtal.TestAdaptionPlugin</param>
+						</services>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>generate</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 		</plugins>
 	</build>
 
@@ -128,7 +167,7 @@
 		<dependency>
     		<groupId>ch.qos.logback</groupId>
     		<artifactId>logback-classic</artifactId>
-    		<version>1.5.13</version>
+    		<version>1.5.14</version>
     		<scope>test</scope>
 		</dependency>
 		<dependency>

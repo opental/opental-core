@@ -18,6 +18,12 @@ module opental.core {
 	exports org.vebqa.vebtal.gui to javafx.graphics;
 	opens org.vebqa.vebtal.model to javafx.base;
 	
+	exports org.vebqa.vebtal;
+	exports org.vebqa.vebtal.model;
+	exports org.vebqa.vebtal.sut;
+	exports org.vebqa.vebtal.command;
+	exports org.vebqa.vebtal.annotations;
+	
 	uses org.vebqa.vebtal.TestAdaptionPlugin;
 	
 	provides org.vebqa.vebtal.TestAdaptionPlugin with
