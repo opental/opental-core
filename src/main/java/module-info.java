@@ -14,9 +14,11 @@ module opental.core {
 	requires org.eclipse.jetty.servlet;
 	requires javafx.graphics;
 	requires javafx.controls;
+	requires java.desktop;
 
-	exports org.vebqa.vebtal.gui to javafx.graphics;
+	exports org.vebqa.vebtal.gui;
 	opens org.vebqa.vebtal.model to javafx.base;
+	opens images.gui;
 	
 	exports org.vebqa.vebtal;
 	exports org.vebqa.vebtal.model;

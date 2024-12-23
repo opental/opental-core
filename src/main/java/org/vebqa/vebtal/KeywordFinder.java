@@ -58,9 +58,16 @@ public class KeywordFinder {
 
 		// @TODO: search only in command packages
 		Reflections reflection = new Reflections(
-				new ConfigurationBuilder().addUrls(ClasspathHelper.forPackage(KeywordFinder.cmdPackage))
-						.addUrls(ClasspathHelper.forPackage(KeywordFinder.commonCommandPackage)));
-
+				new ConfigurationBuilder()
+						.addUrls(ClasspathHelper.forPackage(KeywordFinder.cmdPackage))
+//						.addUrls(ClasspathHelper.forPackage(KeywordFinder.commonCommandPackage))
+				);
+		
+		Set<Class<?>> aT = reflection.getTypesAnnotatedWith(Keyword.class);
+		for (Class oneType : aT) {
+			logger.info(oneType.getName());
+		}
+		
 		Set<Class<?>> clKeywords = reflection.getTypesAnnotatedWith(Keyword.class);
 
 		for (Class<?> aKeywordClass : clKeywords) {
