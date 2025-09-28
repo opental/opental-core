@@ -2,7 +2,6 @@ package org.vebqa.vebtal.model;
 
 import javafx.beans.property.SimpleStringProperty;
 
-@SuppressWarnings("restriction")
 public class CommandResult {
 	private final SimpleStringProperty command;
 	private final SimpleStringProperty target;

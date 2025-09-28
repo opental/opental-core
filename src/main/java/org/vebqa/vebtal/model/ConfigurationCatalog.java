@@ -2,7 +2,6 @@ package org.vebqa.vebtal.model;
 
 import javafx.beans.property.SimpleStringProperty;
 
-@SuppressWarnings("restriction")
 public class ConfigurationCatalog {
 	private final SimpleStringProperty key;
 	private final SimpleStringProperty value;
