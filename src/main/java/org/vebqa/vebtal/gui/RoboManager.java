@@ -61,12 +61,9 @@ public class RoboManager extends Application {
 
 		// Create config tab
 		GuiManager.getinstance().getMainTab().getTabs().add(GuiManager.getinstance().createConfigTab());
+		GuiManager.getinstance().getMainTab().getTabs().add(GuiManager.getinstance().createLogTab());
 
 		GuiManager.getinstance().getMain().setCenter(GuiManager.getinstance().getMainTab());
-
-		// Log Area
-		/** Logs **/
-		GuiManager.getinstance().getMain().setBottom(GuiManager.getinstance().getLogArea());
 
 		// load plugin configurations
 		Iterator<TestAdaptionPlugin> plugins = ServiceLoader.load(TestAdaptionPlugin.class).iterator();
@@ -127,8 +124,7 @@ public class RoboManager extends Application {
 			// we will start adapter only at this point
 			if (robo.getType() == TestAdaptionType.ADAPTER) {
 				try {
-					// logger.info("Start plugin of type (" + robo.getType() + "): " +
-					// robo.getName());
+					logger.info("Start plugin of type (" + robo.getType() + "): " + robo.getName());
 					GuiManager.getinstance().getMainTab().getTabs().add(robo.startup());
 				} catch (Exception e) {
 					logger.error("Error while starting plugin: " + robo.getName(), e);

@@ -7,6 +7,7 @@ import org.apache.commons.configuration2.tree.OverrideCombiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vebqa.vebtal.model.ConfigurationCatalog;
+import org.vebqa.vebtal.model.LogEntryCatalog;
 import org.vebqa.vebtal.sut.SutStatus;
 
 import javafx.application.Platform;
@@ -39,14 +40,13 @@ public class GuiManager {
 	private static final TableView<ConfigurationCatalog> configList = new TableView<>();
 	private static final ObservableList<ConfigurationCatalog> configData = FXCollections.observableArrayList();
 
+	private static final TableView<LogEntryCatalog> logList = new TableView<>();
+	private static final ObservableList<LogEntryCatalog> logData = FXCollections.observableArrayList();
 	
 	private TabPane mainTabPane = new TabPane();
 
 	private BorderPane mainPane = new BorderPane();
 	
-	/** Logs **/
-	private TextArea textArea = new TextArea();
-
 	public GuiManager() {
 		logger.debug("Guimanager created.");
 	}
@@ -62,13 +62,17 @@ public class GuiManager {
 	public BorderPane getMain() {
 		return mainPane;
 	}
-	
-	public TextArea getLogArea() {
-		return textArea;
-	}
-	
+		
 	public void writeLog(String someInfo) {
-		Platform.runLater(() -> textArea.appendText(someInfo + "\n"));
+		final LogEntryCatalog tLC = new LogEntryCatalog(someInfo);
+		
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				logData.add(tLC);
+			}
+		});
 	}
 	
 	public void setTabStatus(String anIdentifier, SutStatus aStatus) {
@@ -142,5 +146,28 @@ public class GuiManager {
 		genericTab.setContent(root);
 		
 		return genericTab;
+	}
+	
+	public Tab createLogTab() {
+		logger.info("create logger tab");
+		Tab loggerTab = new Tab();
+		loggerTab.setId("log");
+		loggerTab.setText("Log");
+		
+		BorderPane root = new BorderPane();
+		// Table bauen
+		TableColumn logEntry = new TableColumn("Log Entry");
+		logEntry.setCellValueFactory(new PropertyValueFactory<LogEntryCatalog, String>("entry"));
+		logEntry.setSortable(false);
+		// confKey.prefWidthProperty().bind(configList.widthProperty().multiply(0.25));
+		logEntry.setMinWidth(logList.getPrefWidth());
+				
+		logList.setItems(logData);
+		logList.getColumns().addAll(logEntry);
+		
+		root.setCenter(logList);
+		loggerTab.setContent(root);
+		
+		return loggerTab;
 	}
 }
