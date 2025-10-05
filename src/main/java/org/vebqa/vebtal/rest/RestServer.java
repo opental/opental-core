@@ -71,16 +71,16 @@ public class RestServer {
 			final TestAdaptionPlugin robo = plugins.next();
 			// register old-style adapter
 			if (robo.getType() == TestAdaptionType.ADAPTER && robo.getImplementation() != null) {
-				logger.info("register old style: " + robo.getName());
+				logger.info("register old style: {}", robo.getName());
 				try {
 					config.register(robo.getImplementation());
-				} catch (Exception e) {
-					logger.error("Error while starting plugin: " + robo.getName(), e);
 				} catch (NoSuchMethodError e) {
+					logger.error("Error while starting plugin: " + robo.getName(), e);
+				} catch (Exception e) {
 					logger.error("Error while starting plugin: " + robo.getName(), e);
 				}
 			} else if (robo.getType() == TestAdaptionType.ADAPTER && robo.getImplementation() == null) {
-				logger.info("register new style: " + robo.getName());
+				logger.info("register new style: {}", robo.getName());
 
 				// register new-style adapter
 				final Resource.Builder resourceBuilder = Resource.builder();
@@ -93,9 +93,9 @@ public class RestServer {
 							@Override
 							public Response apply(ContainerRequestContext request) {
 
-								logger.info("Media Type: " + request.getMediaType().toString());
+								logger.info("Media Type: {}", request.getMediaType().toString());
 								String entity = getEntityBody(request);
-								logger.info("Entity: " + entity);
+								logger.info("Entity: {}", entity);
 								
 								// convert entity data to command object model
 								ObjectMapper mapper = new ObjectMapper();
@@ -128,11 +128,11 @@ public class RestServer {
 									try {
 										cmdClass = Class.forName(tAdapterClass);
 									} catch (ClassNotFoundException e2) {
-										logger.error("Adapter class not found: " + tAdapterClass);
+										logger.error("Adapter class not found: {}", tAdapterClass);
 									}
 								}
 								
-								logger.info("call handler class: " + tAdapterClass);
+								logger.info("call handler class: {}", tAdapterClass);
 								Response result = null;
 								try {
 									TestAdaptionResource cmdObj = (TestAdaptionResource)cmdClass.newInstance();
@@ -167,7 +167,6 @@ public class RestServer {
 			}
 		} // register adaption plugins
 
-		// config.register(MoxyJsonFeature.class);
 		config.register(RequestLoggingFilter.class);
 		config.register(CharsetResponseFilter.class);
 
@@ -264,7 +263,7 @@ public class RestServer {
 		@Override
 		public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
 				throws IOException {
-			logger.error("HTTP ERROR: " + String.valueOf(response.getStatus()));
+			logger.error("HTTP ERROR: {}", String.valueOf(response.getStatus()));
 
 			Response error = new Response();
 			error.setCode(String.valueOf(response.getStatus()));

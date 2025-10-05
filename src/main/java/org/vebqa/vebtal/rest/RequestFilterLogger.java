@@ -29,8 +29,8 @@ public class RequestFilterLogger implements ContainerRequestFilter {
 		
         //log entity stream...
         String entity = readEntityStream(request);
-        if(null != entity && entity.trim().length() > 0) {
-            logger.info("Entity Stream : {}",entity);
+        if(null != entity && !entity.isEmpty()) {
+            logger.info("Entity Stream : {}", entity);
         }
 
 	}
@@ -41,7 +41,7 @@ public class RequestFilterLogger implements ContainerRequestFilter {
             String name = iterator.next();
             List<String> obj = requestContext.getUriInfo().getPathParameters().get(name);
             String value = null;
-            if(null != obj && obj.size() > 0) {
+            if(null != obj && !obj.isEmpty()) {
                 value = obj.get(0);
             }
             logger.info("Query Parameter Name: {}, Value :{}", name, value);

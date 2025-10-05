@@ -17,6 +17,6 @@ public class ResponseLoggingFilter implements ContainerResponseFilter {
 	private static final Logger logger = LoggerFactory.getLogger(ResponseLoggingFilter.class);
 	
 	public void filter(ContainerRequestContext req, ContainerResponseContext resp) throws IOException {
-		logger.info("Response status: " + resp.getStatus());
+		logger.info("Response status: {}", resp.getStatus());
 	}
 }

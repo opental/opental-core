@@ -38,11 +38,11 @@ public abstract class AbstractTestAdaptionPlugin implements TestAdaptionPlugin {
 	
 	protected TestAdaptionType adaptionType;
 
-	public AbstractTestAdaptionPlugin() {
+	protected AbstractTestAdaptionPlugin() {
 		throw new UnsupportedOperationException("Use constructor without setting the adaption type is forbidden.");
 	}
 
-	public AbstractTestAdaptionPlugin(TestAdaptionType aType) {
+	protected AbstractTestAdaptionPlugin(TestAdaptionType aType) {
 		this.adaptionType = aType;
 	}
 
@@ -71,7 +71,6 @@ public abstract class AbstractTestAdaptionPlugin implements TestAdaptionPlugin {
 	}
 
 	public static void setDisableUserActions(boolean aState) {
-		// Platform.runLater(() -> btnClear.setDisable(aState));
 	}
 
 	protected Tab createTab(String aTabIdentifier, TableView<CommandResult> commandList,
@@ -106,40 +105,33 @@ public abstract class AbstractTestAdaptionPlugin implements TestAdaptionPlugin {
 		TableColumn selCommand = new TableColumn("Command");
 		selCommand.setCellValueFactory(new PropertyValueFactory<CommandResult, String>("command"));
 		selCommand.setSortable(false);
-		// selCommand.prefWidthProperty().bind(commandList.widthProperty().multiply(0.15));
 		selCommand.setMinWidth(commandList.getPrefWidth() * 0.15);
 		
 		TableColumn selTarget = new TableColumn("Target");
 		selTarget.setCellValueFactory(new PropertyValueFactory<CommandResult, String>("target"));
 		selTarget.setSortable(false);
-		// selTarget.prefWidthProperty().bind(commandList.widthProperty().multiply(0.15));
 		selTarget.setMinWidth(commandList.getPrefWidth() * 0.15);
 		
 		TableColumn selValue = new TableColumn("Value");
 		selValue.setCellValueFactory(new PropertyValueFactory<CommandResult, String>("value"));
 		selValue.setSortable(false);
-		// selValue.prefWidthProperty().bind(commandList.widthProperty().multiply(0.15));
 		selValue.setMinWidth(commandList.getPrefWidth() * 0.15);
 		
 		TableColumn selResult = new TableColumn("Result");
 		selResult.setCellValueFactory(new PropertyValueFactory<CommandResult, Image>("result"));
 		selResult.setSortable(false);
-		// selResult.prefWidthProperty().bind(commandList.widthProperty().multiply(0.10));
 		selResult.setMinWidth(commandList.getPrefWidth() * 0.10);
 		
 		TableColumn selInfo = new TableColumn("LogInfo");
 		selInfo.setCellValueFactory(new PropertyValueFactory<CommandResult, String>("loginfo"));
 		selInfo.setSortable(false);
-		// selInfo.prefWidthProperty().bind(commandList.widthProperty().multiply(0.45));
 		selInfo.setMinWidth(commandList.getPrefWidth() * 0.45);
 		
 		commandList.setItems(clData);
 		commandList.getColumns().addAll(selCommandType, selCommand, selTarget, selValue, selResult, selInfo);
 
-		// we need to define a context menu
 		final ContextMenu tableContextMenu = new ContextMenu();
 		
-		// we need a clear all button
 		final MenuItem clearMenuItem = new MenuItem("Clear all");
 		Image imgClear = new Image("/images/gui/trash-2x.png");
 		clearMenuItem.setGraphic(new ImageView(imgClear));

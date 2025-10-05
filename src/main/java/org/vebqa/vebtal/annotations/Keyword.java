@@ -15,5 +15,4 @@ public @interface Keyword {
     String description() default "";
     String hintTarget() default "";
     String hintValue() default "";
-
 }

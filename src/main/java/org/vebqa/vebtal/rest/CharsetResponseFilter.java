@@ -20,7 +20,7 @@ public class CharsetResponseFilter implements ContainerResponseFilter {
 
 	@Override
 	public void filter(ContainerRequestContext request, ContainerResponseContext response) throws IOException {
-		logger.info("creating response for request path: " + request.getUriInfo().getPath());
+		logger.info("creating response for request path: {}", request.getUriInfo().getPath());
 		MediaType contentType = response.getMediaType();
 		request.getHeaders().clear();
 		request.getHeaders().putSingle("Content-Type", contentType.toString() + ";charset=UTF-8");

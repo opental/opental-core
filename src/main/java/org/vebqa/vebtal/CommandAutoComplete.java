@@ -3,7 +3,6 @@ package org.vebqa.vebtal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,19 +25,19 @@ public class CommandAutoComplete extends TextField {
 	 * 
 	 * @param allCmds all commands
 	 * */
-	public CommandAutoComplete(TreeSet<String> allCmds) {
+	public CommandAutoComplete(SortedSet<String> allCmds) {
 		super();
 		entries = allCmds;
 		entriesPopup = new ContextMenu();
 		textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
-				if (getText().length() == 0) {
+				if (getText().isEmpty()) {
 					entriesPopup.hide();
 				} else {
 					LinkedList<String> searchResult = new LinkedList<>();
 					searchResult.addAll(entries.subSet(getText(), getText() + Character.MAX_VALUE));
-					if (entries.size() > 0) {
+					if (!entries.isEmpty()) {
 						populatePopup(searchResult);
 						if (!entriesPopup.isShowing()) {
 							entriesPopup.show(CommandAutoComplete.this, Side.BOTTOM, 0, 0);

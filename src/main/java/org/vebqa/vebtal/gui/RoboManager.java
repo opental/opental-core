@@ -2,6 +2,7 @@ package org.vebqa.vebtal.gui;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -32,31 +33,11 @@ public class RoboManager extends Application {
 
 	public static void main(String[] args) {
 		Application.launch(RoboManager.class, args);
-		// LauncherImpl.launchApplication(RoboManager.class, AppPreloader.class, args);
 	}
 
 	@Override
 	public void init() throws Exception {
 
-//		ConfigurationBuilder<BuiltConfiguration> configBuilder = ConfigurationBuilderFactory.newConfigurationBuilder();
-//		
-//		configBuilder.setStatusLevel(Level.INFO);
-//		configBuilder.setConfigurationName("VEBTALRT");
-//
-//		// create the appender
-//		LayoutComponentBuilder layoutBuilder = configBuilder.newLayout("SerializedLayout");
-//		
-//		AppenderComponentBuilder appenderBuilder = configBuilder.newAppender("remoteAppender", "Socket").addAttribute("host", "localhost").addAttribute("port", 85).add(layoutBuilder);
-//		configBuilder.add(appenderBuilder);
-//		
-//		// create a new logger
-//		configBuilder.add(configBuilder.newLogger("rtlogger", Level.DEBUG).add(configBuilder.newAppenderRef("remoteAppender")).addAttribute("additivity", false));
-//		
-//		configBuilder.add(configBuilder.newRootLogger(Level.DEBUG).add(configBuilder.newAppenderRef("remoteAppender")));
-//		
-//		LoggerContext ctx = Configurator.initialize(configBuilder.build());    	
-
-		// BorderPane zur Aufnahme der Tabs
 		GuiManager.getinstance().getMainTab().setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
 		// Create config tab
@@ -73,14 +54,11 @@ public class RoboManager extends Application {
 		}
 
 		// save all keyword packages here
-		ArrayList<String> tCommandPackages = new ArrayList<String>();
+		List<String> tCommandPackages = new ArrayList<>();
 		
 		while (plugins.hasNext()) {
 			TestAdaptionPlugin robo = plugins.next();
 			logger.info("Found next plugin: {}", robo.getAdaptionID());
-//			LauncherImpl.notifyPreloader(this,
-//					new AppPreloader.ActualTaskNotification("Load configuration for plugin: " + robo.getName()));
-			// we will load configs from Adapter and extensions
 			if (robo.getType() == TestAdaptionType.ADAPTER || robo.getType() == TestAdaptionType.EXTENSION) {
 				CombinedConfiguration tCfgAdapter = new CombinedConfiguration();
 				tCfgAdapter.addProperty("adapter." + robo.getAdaptionID() + ".root", robo.getClass().getPackage().getName());
@@ -118,22 +96,17 @@ public class RoboManager extends Application {
 		while (plugins.hasNext()) {
 			TestAdaptionPlugin robo = plugins.next();
 			
-//			  LauncherImpl.notifyPreloader(this, new AppPreloader.ActualTaskNotification(
-//			  "Start plugin of type (" + robo.getType() + "): " + robo.getName()));
-			 
-			// we will start adapter only at this point
 			if (robo.getType() == TestAdaptionType.ADAPTER) {
 				try {
-					logger.info("Start plugin of type (" + robo.getType() + "): " + robo.getName());
+					logger.info("Start plugin ({}) of type ({}) ", robo.getName(), robo.getType());
 					GuiManager.getinstance().getMainTab().getTabs().add(robo.startup());
 				} catch (Exception e) {
-					logger.error("Error while starting plugin: " + robo.getName(), e);
+					logger.error("Error while starting plugin: {}", robo.getName(), e);
 				}
 			}
 			Thread.sleep(250);
 		}
 
-		// decide which port to use, if not set via cli, use setting from config
 		Parameters parameters = getParameters();
 		Map<String, String> namedArguments = parameters.getNamed();
 
@@ -141,7 +114,7 @@ public class RoboManager extends Application {
 		// --port
 		int port = 0; // default, not used
 		for (Map.Entry<String, String> entry : namedArguments.entrySet()) {
-			logger.info("found cli key " + entry.getKey());
+			logger.info("found cli key ({}) ", entry.getKey());
 			switch (entry.getKey()) {
 			case "port":
 				port = Integer.parseInt(entry.getValue());
@@ -170,8 +143,6 @@ public class RoboManager extends Application {
 		t.start();
 
 		while (!t.isAlive()) {
-//			LauncherImpl.notifyPreloader(this,
-//					new AppPreloader.ActualTaskNotification("Wait for service startup completion."));
 			Thread.sleep(50);
 		}
 
@@ -184,23 +155,14 @@ public class RoboManager extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		// application title
-		// TODO: I18N
 		primaryStage.setTitle("Test Adaption Manager");
 
-		// in stage einfuegen
-		// width / height from config
 		double width = GuiManager.getinstance().getConfig().getDouble("manager.width");
 		double height = GuiManager.getinstance().getConfig().getDouble("manager.height");
 		primaryStage.setScene(new Scene(GuiManager.getinstance().getMain(), width, height));
 
-		// Close all -> shutdown all plugins
-		primaryStage.setOnCloseRequest(evt -> {
-			// execute own shutdown procedure
-			shutdown(primaryStage);
-		});
+		primaryStage.setOnCloseRequest(evt -> shutdown(primaryStage));
 
-		// anzeigen
 		primaryStage.show();
 	}
 
@@ -227,7 +189,6 @@ public class RoboManager extends Application {
 			logger.error("Error while stopping application.", e);
 		}
 
-		// close this...
 		mainWindow.close();
 	}
 
