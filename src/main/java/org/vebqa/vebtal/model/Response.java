@@ -34,26 +34,30 @@ public class Response {
 	public String getStoredKey() {
 		return storedKey;
 	}
-	public void setStoredKey(String storedKey) {
+	public Response setStoredKey(String storedKey) {
 		this.storedKey = storedKey;
+		return this;
 	}
 	public String getStoredValue() {
 		return storedValue;
 	}
-	public void setStoredValue(String storedValue) {
+	public Response setStoredValue(String storedValue) {
 		this.storedValue = storedValue;
+		return this;
 	}
 	public String getMessage() {
 		return message;
 	}
-	public void setMessage(String message) {
+	public Response setMessage(String message) {
 		this.message = message;
+		return this;
 	}
 	public String getCode() {
 		return code;
 	}
-	public void setCode(String code) {
+	public Response setCode(String code) {
 		this.code = code;
+		return this;
 	}
 	
 	public String toString() {
