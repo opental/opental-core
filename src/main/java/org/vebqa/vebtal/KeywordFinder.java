@@ -32,7 +32,7 @@ public class KeywordFinder {
 	 * TODO: Move list to central storage
 	 * storage for all keywords found in classpath
 	 */
-	private List<KeywordEntry> allCustomKeywords = new ArrayList<KeywordEntry>();
+	private List<KeywordEntry> allCustomKeywords = new ArrayList<>();
 
 	/**
 	 * default
@@ -56,7 +56,6 @@ public class KeywordFinder {
 	public void scan() {
 		allCustomKeywords.clear();
 
-		// @TODO: search only in command packages
 		Reflections reflection = new Reflections(
 				new ConfigurationBuilder()
 						.addUrls(ClasspathHelper.forPackage(KeywordFinder.cmdPackage))
@@ -64,7 +63,7 @@ public class KeywordFinder {
 				);
 		
 		Set<Class<?>> aT = reflection.getTypesAnnotatedWith(Keyword.class);
-		for (Class oneType : aT) {
+		for (Class<?> oneType : aT) {
 			logger.info(oneType.getName());
 		}
 		
@@ -79,7 +78,7 @@ public class KeywordFinder {
 			}
 		}
 
-		logger.info(allCustomKeywords.size() + " custom keywords found and added to the storage.");
+		logger.info("{} custom keywords found and added to the storage.", allCustomKeywords.size());
 	}
 
 	/**
@@ -99,23 +98,20 @@ public class KeywordFinder {
 	 * @return List of keywords
 	 */
 	public List<KeywordEntry> getKeywordsByModule(String aModule) {
-		List<KeywordEntry> moduleKeywords = new ArrayList<KeywordEntry>();
+		List<KeywordEntry> moduleKeywords = new ArrayList<>();
 		for (KeywordEntry aKeyword : this.allCustomKeywords) {
 			if (aKeyword.getModule().contentEquals(aModule)) {
 				moduleKeywords.add(aKeyword);
 			}
 		}
-		logger.info(moduleKeywords.size() + " custom keywords for specific module found out of all: "
-				+ this.allCustomKeywords.size());
+		logger.info("{} custom keywords for specific module found out of all: {}", moduleKeywords.size(), this.allCustomKeywords.size());
 		return moduleKeywords;
 	}
 
 	public boolean isKeywordExisting(String aModule, String aCmd) {
 		for (KeywordEntry aKeyword : this.allCustomKeywords) {
-			if (aKeyword.getModule().contentEquals(aModule)) {
-				if (aKeyword.getCommand().equalsIgnoreCase(aCmd)) {
+			if (aKeyword.getModule().contentEquals(aModule) && (aKeyword.getCommand().equalsIgnoreCase(aCmd))) {
 					return true;
-				}
 			}
 		}
 		return false;

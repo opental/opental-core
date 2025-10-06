@@ -17,7 +17,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -66,20 +65,16 @@ public class GuiManager {
 	public void writeLog(String someInfo) {
 		final LogEntryCatalog tLC = new LogEntryCatalog(someInfo);
 		
-		Platform.runLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				logData.add(tLC);
-			}
-		});
+		Platform.runLater(() -> 
+				logData.add(tLC)
+		);
 	}
 	
 	public void setTabStatus(String anIdentifier, SutStatus aStatus) {
 		ObservableList<Tab> tabs = mainTabPane.getTabs();
 		boolean tabFound = false;
 		for (final Tab aTab : tabs) {
-			if (aTab.getId() == anIdentifier) {
+			if (aTab.getId().equals(anIdentifier)) {
 				tabFound = true;
 				if (aStatus == SutStatus.CONNECTED) {
 					final Image imgTabStatus = new Image("/images/gui/transfer-2x.png");
@@ -102,19 +97,15 @@ public class GuiManager {
 	public void showConfig() {
 		ObservableList<Tab> tabs = mainTabPane.getTabs();
 		for (final Tab aTab : tabs) {
-			if (aTab.getId() == "config") {
+			if (aTab.getId().equals("config")) {
 				Iterator<String> keys = config.getKeys();
 				while(keys.hasNext()) {
 					String aKey = keys.next();
 					final ConfigurationCatalog tCC = new ConfigurationCatalog(aKey, config.getString(aKey));
 					
-					Platform.runLater(new Runnable() {
-						
-						@Override
-						public void run() {
-							configData.add(tCC);
-						}
-					});
+					Platform.runLater(() ->
+						configData.add(tCC)
+					);
 				}
 			}
 		}
@@ -127,16 +118,14 @@ public class GuiManager {
 		
 		BorderPane root = new BorderPane();
 		// Table bauen
-		TableColumn confKey = new TableColumn("Key");
-		confKey.setCellValueFactory(new PropertyValueFactory<ConfigurationCatalog, String>("key"));
+		TableColumn<ConfigurationCatalog, String> confKey = new TableColumn<>("Key");
+		confKey.setCellValueFactory(new PropertyValueFactory<>("key"));
 		confKey.setSortable(false);
-		// confKey.prefWidthProperty().bind(configList.widthProperty().multiply(0.25));
 		confKey.setMinWidth(configList.getPrefWidth() * 0.25);
 		
-		TableColumn confValue = new TableColumn("Value");
-		confValue.setCellValueFactory(new PropertyValueFactory<ConfigurationCatalog, String>("value"));
+		TableColumn<ConfigurationCatalog, String> confValue = new TableColumn<>("Value");
+		confValue.setCellValueFactory(new PropertyValueFactory<>("value"));
 		confValue.setSortable(false);
-		// confValue.prefWidthProperty().bind(configList.widthProperty().multiply(0.25));
 		confValue.setMinWidth(configList.getPrefWidth() * 0.25);
 		
 		configList.setItems(configData);
@@ -156,10 +145,9 @@ public class GuiManager {
 		
 		BorderPane root = new BorderPane();
 		// Table bauen
-		TableColumn logEntry = new TableColumn("Log Entry");
-		logEntry.setCellValueFactory(new PropertyValueFactory<LogEntryCatalog, String>("entry"));
+		TableColumn<LogEntryCatalog, String> logEntry = new TableColumn<>("Log Entry");
+		logEntry.setCellValueFactory(new PropertyValueFactory<>("entry"));
 		logEntry.setSortable(false);
-		// confKey.prefWidthProperty().bind(configList.widthProperty().multiply(0.25));
 		logEntry.setMinWidth(logList.getPrefWidth());
 				
 		logList.setItems(logData);

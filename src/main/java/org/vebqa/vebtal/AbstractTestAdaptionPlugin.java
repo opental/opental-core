@@ -17,10 +17,12 @@ import org.vebqa.vebtal.model.CommandType;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
@@ -31,6 +33,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public abstract class AbstractTestAdaptionPlugin implements TestAdaptionPlugin {
 
@@ -96,34 +99,81 @@ public abstract class AbstractTestAdaptionPlugin implements TestAdaptionPlugin {
 		hbox.setId("table");
 
 		// Table bauen
-		TableColumn selCommandType = new TableColumn("Type");
-		selCommandType.setCellValueFactory(new PropertyValueFactory<CommandResult, CommandType>("type"));
-		selCommandType.setCellFactory(new CommandTypeCellFactory());
+		TableColumn<CommandResult, CommandType> selCommandType = new TableColumn<>("Type");
+		selCommandType.setCellValueFactory(new PropertyValueFactory<>("type"));
+		selCommandType.setCellFactory((tableColumn) -> {
+			TableCell<CommandResult, CommandType> tableCell = new TableCell<>() {
+
+				private final VBox vbox;
+				private final ImageView imageview;
+
+				// Constructor
+				{
+					vbox = new VBox();
+					vbox.setAlignment(Pos.CENTER);
+					imageview = new ImageView();
+					imageview.setFitHeight(16);
+					imageview.setFitWidth(16);
+					imageview.setVisible(true);
+					imageview.setCache(true);
+					vbox.getChildren().addAll(imageview);
+					setGraphic(vbox);
+				}
+
+				@Override
+				protected void updateItem(CommandType item, boolean empty) {
+
+					// calling super here is very important - don't skip this!
+					super.updateItem(item, empty);
+
+					if (empty) {
+						setText(null);
+						setGraphic(null);
+
+					} else {
+						Image image;
+						if (item == CommandType.ACCESSOR) {
+							image = new Image("/images/gui/arrow-left-2x.png");
+						} else if (item == CommandType.ACTION) {
+							image = new Image("/images/gui/arrow-right-2x.png");
+						} else if (item == CommandType.ASSERTION) {
+							image = new Image("/images/gui/eye-2x.png");
+						} else {
+							image = new Image("/images/gui/question-mark-2x.png");
+						}
+
+						imageview.setImage(image);
+						setGraphic(vbox);
+					}
+				}
+			};
+			return tableCell;
+		});
 		selCommandType.setSortable(false);
 		selCommandType.setPrefWidth(36); // fixed width!
 
-		TableColumn selCommand = new TableColumn("Command");
-		selCommand.setCellValueFactory(new PropertyValueFactory<CommandResult, String>("command"));
+		TableColumn<CommandResult, String> selCommand = new TableColumn<>("Command");
+		selCommand.setCellValueFactory(new PropertyValueFactory<>("command"));
 		selCommand.setSortable(false);
 		selCommand.setMinWidth(commandList.getPrefWidth() * 0.15);
 		
-		TableColumn selTarget = new TableColumn("Target");
-		selTarget.setCellValueFactory(new PropertyValueFactory<CommandResult, String>("target"));
+		TableColumn<CommandResult, String> selTarget = new TableColumn<>("Target");
+		selTarget.setCellValueFactory(new PropertyValueFactory<>("target"));
 		selTarget.setSortable(false);
 		selTarget.setMinWidth(commandList.getPrefWidth() * 0.15);
 		
-		TableColumn selValue = new TableColumn("Value");
-		selValue.setCellValueFactory(new PropertyValueFactory<CommandResult, String>("value"));
+		TableColumn<CommandResult, String> selValue = new TableColumn<>("Value");
+		selValue.setCellValueFactory(new PropertyValueFactory<>("value"));
 		selValue.setSortable(false);
 		selValue.setMinWidth(commandList.getPrefWidth() * 0.15);
 		
-		TableColumn selResult = new TableColumn("Result");
-		selResult.setCellValueFactory(new PropertyValueFactory<CommandResult, Image>("result"));
+		TableColumn<CommandResult, Image> selResult = new TableColumn<>("Result");
+		selResult.setCellValueFactory(new PropertyValueFactory<>("result"));
 		selResult.setSortable(false);
 		selResult.setMinWidth(commandList.getPrefWidth() * 0.10);
 		
-		TableColumn selInfo = new TableColumn("LogInfo");
-		selInfo.setCellValueFactory(new PropertyValueFactory<CommandResult, String>("loginfo"));
+		TableColumn<CommandResult, String> selInfo = new TableColumn<>("LogInfo");
+		selInfo.setCellValueFactory(new PropertyValueFactory<>("loginfo"));
 		selInfo.setSortable(false);
 		selInfo.setMinWidth(commandList.getPrefWidth() * 0.45);
 		

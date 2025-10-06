@@ -72,13 +72,7 @@ public class RestServer {
 			// register old-style adapter
 			if (robo.getType() == TestAdaptionType.ADAPTER && robo.getImplementation() != null) {
 				logger.info("register old style: {}", robo.getName());
-				try {
-					config.register(robo.getImplementation());
-				} catch (NoSuchMethodError e) {
-					logger.error("Error while starting plugin: " + robo.getName(), e);
-				} catch (Exception e) {
-					logger.error("Error while starting plugin: " + robo.getName(), e);
-				}
+				config.register(robo.getImplementation());
 			} else if (robo.getType() == TestAdaptionType.ADAPTER && robo.getImplementation() == null) {
 				logger.info("register new style: {}", robo.getName());
 
