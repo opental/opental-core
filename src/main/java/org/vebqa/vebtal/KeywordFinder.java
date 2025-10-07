@@ -116,4 +116,27 @@ public class KeywordFinder {
 		}
 		return false;
 	}
+
+	public boolean isTargetEnabled(String aModule, String aCmd) {
+		boolean isEnabled = true;
+		for (KeywordEntry aKeyword : this.allCustomKeywords) {
+			if (aKeyword.getModule().contentEquals(aModule) && (aKeyword.getCommand().equalsIgnoreCase(aCmd) && aKeyword.getHintTarget().isEmpty())) {
+				logger.info("Disable target field for: {}", aCmd);	
+				isEnabled = false;
+			}
+		}
+		return isEnabled;
+	}
+
+	public boolean isValueEnabled(String aModule, String aCmd) {
+		boolean isEnabled = true;
+		for (KeywordEntry aKeyword : this.allCustomKeywords) {
+			if (aKeyword.getModule().contentEquals(aModule) && (aKeyword.getCommand().equalsIgnoreCase(aCmd) && aKeyword.getHintValue().isEmpty())) {
+				logger.info("Disable value field for: {}", aCmd);	
+				isEnabled = false;
+			}
+		}
+		return isEnabled;
+	}
+
 }
