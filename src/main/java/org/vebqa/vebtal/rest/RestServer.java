@@ -129,9 +129,9 @@ public class RestServer {
 								logger.info("call handler class: {}", tAdapterClass);
 								Response result = null;
 								try {
-									TestAdaptionResource cmdObj = (TestAdaptionResource)cmdClass.newInstance();
+									TestAdaptionResource cmdObj = (TestAdaptionResource)cmdClass.getDeclaredConstructor().newInstance();
 
-									Class[] argTypes = new Class[] { Command.class };
+									Class<Command>[] argTypes = new Class[] { Command.class };
 									Method m = cmdClass.getDeclaredMethod("execute", argTypes);
 
 									result = (Response) m.invoke(cmdObj, cmd);
@@ -164,8 +164,10 @@ public class RestServer {
 		config.register(RequestLoggingFilter.class);
 		config.register(CharsetResponseFilter.class);
 
-		ServletHolder servlet = new ServletHolder(new ServletContainer(config));
-
+		ServletContainer sc = new ServletContainer(config);
+		// ServletHolder holder = new ServletHolder(sc);
+		ServletHolder holder = new ServletHolder();
+		
 		apiServer = new Server();
 		ServerConnector connector = new ServerConnector(apiServer);
 		connector.setPort(this.port);
@@ -173,7 +175,7 @@ public class RestServer {
 		apiServer.addConnector(connector);
 		
 		ServletContextHandler context = new ServletContextHandler(apiServer, "/*");
-		context.addServlet(servlet, "/*");
+		context.addServlet(holder, "/*");
 		context.setErrorHandler(new ErrorHandler());
 
 		try {

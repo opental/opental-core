@@ -21,6 +21,7 @@ public class KeywordFinder {
 	 * @deprecated
 	 * package scope to resolve keywords
 	 */
+	@Deprecated
 	private static final String cmdPackage = "org.vebqa.vebtal";
 
 	/**

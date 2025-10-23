@@ -1,7 +1,5 @@
 package org.vebqa.vebtal.command;
 
-import java.lang.annotation.Annotation;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vebqa.vebtal.annotations.Keyword;
