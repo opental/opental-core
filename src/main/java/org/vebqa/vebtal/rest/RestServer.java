@@ -165,7 +165,6 @@ public class RestServer {
 		config.register(CharsetResponseFilter.class);
 
 		ServletContainer sc = new ServletContainer(config);
-		// ServletHolder holder = new ServletHolder(sc);
 		ServletHolder holder = new ServletHolder();
 		
 		apiServer = new Server();

@@ -140,4 +140,25 @@ public class KeywordFinder {
 		return isEnabled;
 	}
 
+	public String getTargetHint(String aModule, String aCmd) {
+		String hntTarget = "";
+		for (KeywordEntry aKeyword : this.allCustomKeywords) {
+			if (aKeyword.getModule().contentEquals(aModule) && (aKeyword.getCommand().equalsIgnoreCase(aCmd))) {
+				logger.info("Get hint for target for keyword: {}", aCmd);	
+				hntTarget = aKeyword.getHintTarget();
+			}
+		}
+		return hntTarget;
+	}
+	
+	public String getValueHint(String aModule, String aCmd) {
+		String hntValue = "";
+		for (KeywordEntry aKeyword : this.allCustomKeywords) {
+			if (aKeyword.getModule().contentEquals(aModule) && (aKeyword.getCommand().equalsIgnoreCase(aCmd))) {
+				logger.info("Get hint for target for keyword: {}", aCmd);	
+				hntValue = aKeyword.getHintValue();
+			}
+		}
+		return hntValue;
+	}
 }
