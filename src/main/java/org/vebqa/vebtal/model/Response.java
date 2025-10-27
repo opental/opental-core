@@ -31,33 +31,45 @@ public class Response {
 	private String storedValue;
 	
 	
+	Response() { }
+	
+	Response(Builder builder) {
+		this.message = builder.message;
+	    this.code = builder.code;
+	    this.storedKey = builder.storedKey;
+	    this.storedValue = builder.storedValue;
+	}
+	
 	public String getStoredKey() {
 		return storedKey;
 	}
-	public Response setStoredKey(String storedKey) {
-		this.storedKey = storedKey;
-		return this;
+	
+	public void setStoredKey(String aStoredKey) {
+		this.storedKey = aStoredKey;
 	}
+
 	public String getStoredValue() {
 		return storedValue;
 	}
-	public Response setStoredValue(String storedValue) {
-		this.storedValue = storedValue;
-		return this;
+	
+	public void setStoredValue(String aStoredValue) {
+		this.storedValue = aStoredValue;
 	}
+
 	public String getMessage() {
 		return message;
 	}
-	public Response setMessage(String message) {
-		this.message = message;
-		return this;
+	
+	public void setMessage(String aMessage) {
+		this.message = aMessage;
 	}
+
 	public String getCode() {
 		return code;
 	}
-	public Response setCode(String code) {
-		this.code = code;
-		return this;
+	
+	public void setCode(String aCode) {
+		this.code = aCode;
 	}
 	
 	public String toString() {
@@ -66,4 +78,35 @@ public class Response {
 		}
 		return "[Code: " + this.code + ", " + "Message: " + this.message + ", " + "StoredKey: " + this.storedKey + ", " + "StoredValue: " + this.storedValue + "]";
 	}
+	
+    public static class Builder {
+		private String message;
+	    private String code;
+	    private String storedKey;
+	    private String storedValue;
+
+        public Builder setMessage(String aMessage) {
+            this.message = aMessage;
+            return this;
+        }
+
+        public Builder setCode(String aCode) {
+            this.code = aCode;
+            return this;
+        }
+
+        public Builder setStoredKey(String storedKey) {
+            this.storedKey = storedKey;
+            return this;
+        }
+
+        public Builder setStoredValue(String storedValue) {
+            this.storedValue = storedValue;
+            return this;
+        }
+
+        public Response build() {
+            return new Response(this);
+        }
+    }
 }

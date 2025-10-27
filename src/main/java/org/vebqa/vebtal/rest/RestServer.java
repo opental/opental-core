@@ -260,9 +260,9 @@ public class RestServer {
 				throws IOException {
 			logger.error("HTTP ERROR: {}", String.valueOf(response.getStatus()));
 
-			Response error = new Response();
-			error.setCode(String.valueOf(response.getStatus()));
-			error.setMessage("Error while processing reequest!");
+			// Response error = new Response();
+			// error.setCode(String.valueOf(response.getStatus()));
+			// error.setMessage("Error while processing reequest!");
 			JsonObject jsonError = Json.createObjectBuilder().add("code", String.valueOf(response.getStatus()))
 					.add("content", "Error while processing request!").build();
 			response.getWriter().append(jsonError.toString());
