@@ -5,6 +5,7 @@
  * 
  */
 module opental.core {
+	exports org.opental.core.exception;
 	exports org.vebqa.vebtal.logging;
 	exports org.vebqa.vebtal.model;
 	exports org.vebqa.vebtal;
