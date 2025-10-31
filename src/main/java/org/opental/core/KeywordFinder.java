@@ -18,13 +18,6 @@ public class KeywordFinder {
 	private static final KeywordFinder finder = new KeywordFinder();
 
 	/**
-	 * @deprecated
-	 * package scope to resolve keywords
-	 */
-	@Deprecated
-	private static final String cmdPackage = "org.vebqa.vebtal";
-
-	/**
 	 * common package scope (new)
 	 */
 	private static final String commonCommandPackage = "org.opental";
@@ -59,8 +52,7 @@ public class KeywordFinder {
 
 		Reflections reflection = new Reflections(
 				new ConfigurationBuilder()
-						.addUrls(ClasspathHelper.forPackage(KeywordFinder.cmdPackage))
-//						.addUrls(ClasspathHelper.forPackage(KeywordFinder.commonCommandPackage))
+						.addUrls(ClasspathHelper.forPackage(KeywordFinder.commonCommandPackage))
 				);
 		
 		Set<Class<?>> aT = reflection.getTypesAnnotatedWith(Keyword.class);
