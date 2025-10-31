@@ -6,16 +6,17 @@
  */
 module opental.core {
 	exports org.opental.core.exception;
-	exports org.vebqa.vebtal.logging;
-	exports org.vebqa.vebtal.model;
-	exports org.vebqa.vebtal;
-	exports org.vebqa.vebtal.manager;
-	exports org.vebqa.vebtal.splash;
-	exports org.vebqa.vebtal.sut;
-	exports org.vebqa.vebtal.rest;
-	exports org.vebqa.vebtal.gui;
-	exports org.vebqa.vebtal.annotations;
-	exports org.vebqa.vebtal.command;
+	exports org.opental.core.logging;
+	exports org.opental.core.model;
+	exports org.opental.core;
+	exports org.opental.manager;
+	exports org.opental.manager.splash;
+	exports org.opental.core.sut;
+	exports org.opental.server;
+	exports org.opental.manager.gui;
+	exports org.opental.core.annotations;
+	exports org.opental.core.command;
+	exports org.opental.plugin;
 
 	requires com.fasterxml.jackson.core;
 	requires com.fasterxml.jackson.databind;
@@ -35,6 +36,6 @@ module opental.core {
 	requires org.reflections;
 	requires transitive org.slf4j;
 	
-	uses org.vebqa.vebtal.TestAdaptionPlugin;
+	uses org.opental.plugin.TestAdaptationPlugin;
 	
 }

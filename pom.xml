@@ -59,7 +59,7 @@
 				<version>1.4.0</version>
 				<configuration>
 					<services>
-						<param>org.vebqa.vebtal.TestAdaptionPlugin</param>
+						<param>org.opental.plugin.TestAdaptationPlugin</param>
 					</services>
 				</configuration>
 				<executions>
