@@ -30,7 +30,7 @@
 	</properties>
 
 	<scm>
-		<url>https://github.com/vebqa/vebtal-api</url>
+		<url>https://github.com/opental/opental-core</url>
 	</scm>
 
 	<developers>
@@ -47,7 +47,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.13.0</version>
+				<version>3.14.1</version>
 				<configuration>
 					<source>21</source>
 					<target>21</target>
