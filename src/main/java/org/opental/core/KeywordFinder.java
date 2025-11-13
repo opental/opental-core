@@ -11,6 +11,9 @@ import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Finder for keywords in our classpath
+ */
 public class KeywordFinder {
 
 	private static final Logger logger = LoggerFactory.getLogger(KeywordFinder.class);
@@ -23,7 +26,6 @@ public class KeywordFinder {
 	private static final String commonCommandPackage = "org.opental";
 
 	/**
-	 * TODO: Move list to central storage
 	 * storage for all keywords found in classpath
 	 */
 	private List<KeywordEntry> allCustomKeywords = new ArrayList<>();
@@ -101,6 +103,12 @@ public class KeywordFinder {
 		return moduleKeywords;
 	}
 
+	/**
+	 * check if a command exist in a given module
+	 * @param aModule adapter module
+	 * @param aCmd a command
+	 * @return true, if command exists
+	 */
 	public boolean isKeywordExisting(String aModule, String aCmd) {
 		for (KeywordEntry aKeyword : this.allCustomKeywords) {
 			if (aKeyword.getModule().contentEquals(aModule) && (aKeyword.getCommand().equalsIgnoreCase(aCmd))) {
@@ -110,6 +118,12 @@ public class KeywordFinder {
 		return false;
 	}
 
+	/**
+	 * check if target is enabled by hint pattern
+	 * @param aModule adapter module
+	 * @param aCmd a command
+	 * @return true, if target is enabled
+	 */
 	public boolean isTargetEnabled(String aModule, String aCmd) {
 		boolean isEnabled = true;
 		for (KeywordEntry aKeyword : this.allCustomKeywords) {
@@ -121,6 +135,12 @@ public class KeywordFinder {
 		return isEnabled;
 	}
 
+	/**
+	 * check if value is enabled by hint pattern
+	 * @param aModule adapter module
+	 * @param aCmd a command
+	 * @return true, if value is enabled
+	 */
 	public boolean isValueEnabled(String aModule, String aCmd) {
 		boolean isEnabled = true;
 		for (KeywordEntry aKeyword : this.allCustomKeywords) {
@@ -132,6 +152,12 @@ public class KeywordFinder {
 		return isEnabled;
 	}
 
+	/**
+	 * Get the given hint for keyword target
+	 * @param aModule adapter module
+	 * @param aCmd a command
+	 * @return hint pattern
+	 */
 	public String getTargetHint(String aModule, String aCmd) {
 		String hntTarget = "";
 		for (KeywordEntry aKeyword : this.allCustomKeywords) {
@@ -143,6 +169,12 @@ public class KeywordFinder {
 		return hntTarget;
 	}
 	
+	/**
+	 * Get the given hint pattern for keyword value 
+	 * @param aModule adapter module
+	 * @param aCmd a command
+	 * @return hint pattern
+	 */
 	public String getValueHint(String aModule, String aCmd) {
 		String hntValue = "";
 		for (KeywordEntry aKeyword : this.allCustomKeywords) {

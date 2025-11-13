@@ -1,5 +1,9 @@
 package org.opental.core;
 
+/**
+ * Class to hold keyword and its attributes
+ * 
+ */
 public class KeywordEntry {
 
 	private String module;
@@ -22,18 +26,34 @@ public class KeywordEntry {
 		this.hintValue = aHintValue;
 	}
 	
+	/**
+	 * Get module name
+	 * @return module name
+	 */
 	public String getModule() {
 		return module;
 	}
 
+	/**
+	 * Get command name
+	 * @return command name
+	 */
 	public String getCommand() {
 		return command;
 	}
 
+	/**
+	 * Get hint pattern for target
+	 * @return hint pattern
+	 */
 	public String getHintTarget() {
 		return hintTarget;
 	}
 
+	/**
+	 * Get hint pattern for value
+	 * @return hint pattern
+	 */
 	public String getHintValue() {
 		return hintValue;
 	}

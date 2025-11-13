@@ -4,6 +4,9 @@ import org.apache.commons.configuration2.CombinedConfiguration;
 
 import javafx.scene.control.Tab;
 
+/**
+ * Interface to describe an adapter
+ */
 public interface TestAdaptationPlugin {
 
 	TestAdaptationType getType();

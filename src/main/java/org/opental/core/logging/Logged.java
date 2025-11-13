@@ -7,6 +7,9 @@ import java.lang.annotation.Target;
 
 import jakarta.ws.rs.NameBinding;
 
+/**
+ * Interface for logging
+ */
 @NameBinding
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})

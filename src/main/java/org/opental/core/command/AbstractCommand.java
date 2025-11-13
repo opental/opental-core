@@ -6,6 +6,9 @@ import org.opental.core.model.CommandType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * abstract of a command
+ */
 public abstract class AbstractCommand implements ICommand {
 	
 	protected final String command;
@@ -17,6 +20,12 @@ public abstract class AbstractCommand implements ICommand {
 	
 	public static final Logger logger = LoggerFactory.getLogger(AbstractCommand.class);
 	
+	/**
+	 * construct a command
+	 * @param aCommand
+	 * @param aTarget
+	 * @param aValue
+	 */
 	protected AbstractCommand(String aCommand, String aTarget, String aValue) {
 		this.command = aCommand.trim();
 		this.target = aTarget.trim();
@@ -24,6 +33,9 @@ public abstract class AbstractCommand implements ICommand {
 		this.style = CommandStyle.GENERIC;
 	}
 	
+	/**
+	 * Standard constructor
+	 */
 	protected AbstractCommand() {
 		this.command = getClass().getAnnotation(Keyword.class).command();
 		this.target = null;
@@ -31,6 +43,10 @@ public abstract class AbstractCommand implements ICommand {
 		this.style = CommandStyle.FLUENT;
 	}
 	
+	/**
+	 * get typ of command
+	 * @return CommandType command type
+	 */
 	public CommandType getType() {
 		return this.type;
 	}
@@ -38,7 +54,7 @@ public abstract class AbstractCommand implements ICommand {
 	/**
 	 * Validate target and value input
 	 * 
-	 * @return
+	 * @return boolean true if validation passed
 	 */
 	public boolean validate() {
 		Keyword anno = getClass().getAnnotation(Keyword.class);

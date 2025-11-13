@@ -6,6 +6,9 @@ import org.opental.plugin.TestAdaptationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Old plugin to implement the manager plugin. Just our favourite to get deprecated
+ */
 public class ManagerTestAdaptionPlugin extends AbstractTestAdaptationPlugin {
 
 	private static final Logger logger = LoggerFactory.getLogger(ManagerTestAdaptionPlugin.class);
@@ -22,11 +25,17 @@ public class ManagerTestAdaptionPlugin extends AbstractTestAdaptationPlugin {
 		return null;
 	}
 	
+	/**
+	 * get the id of the adapter
+	 */
 	@Override
 	public String getAdaptionID() {
 		return ID;
 	}	
 	
+	/**
+	 * get the name of the adapter
+	 */
 	@Override
 	public String getName() {
 		return "OpenTAL Manager Plugin";
